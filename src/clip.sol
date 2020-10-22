@@ -326,7 +326,10 @@ contract Clipper is LibNote {
     }
 
     // Cancel an auction during ES
-    function yank() external note auth {
-        // TODO
+    function yank(bytes32 ilk, uint id) external auth {
+        require(sales[id].usr != address(0), "Clipper/usr-not-set");
+        dog.digs(ilk, sales[id].tab);
+        vat.flux(ilk, address(this), msg.sender, sales[id].lot);
+        delete sales[id];
     }
 }
